@@ -26,9 +26,9 @@ public class Main2Activity extends AppCompatActivity {
         mStoryViewLayer.setOnTextClickListener(new StoryViewLayer.OnTextClickListener() {
 
             @Override
-            public void onTextClick(StoryText text, int type) {
+            public void onTextClick(StoryText text) {
                 mStoryText = text;
-                mStoryTextType = type;
+                mStoryTextType = text.getType();
 
                 mEditText.setText(mStoryText.getText());
             }
@@ -53,7 +53,7 @@ public class Main2Activity extends AppCompatActivity {
         textBean = new TextBean();
         textBean.left = 0.4f;
         textBean.top = 0.3f;
-        textBean.hint = "春眠不觉晓, 处处闻啼鸟。";
+        textBean.hint = "春眠不觉晓，处处闻啼鸟。";
         textBean.size = 20;
         textBean.minSize = 8;
         textBean.color = "#FF0000";
@@ -81,6 +81,57 @@ public class Main2Activity extends AppCompatActivity {
         textBean.width = 0.4f;
         textBean.height = 0.2f;
         textBean.font = "/sdcard/3.ttf";
+        textBean.line = 1;
+        mStoryViewLayer.addData(textBean);
+
+        textBean = new TextBean();
+        textBean.left = 0.2f;
+        textBean.top = 0.7f;
+        textBean.hint = "2018.07.19";
+        textBean.size = 12;
+        textBean.minSize = 12;
+        textBean.color = "#00FF00";
+        textBean.style = "";
+        textBean.spacing = 2;
+        textBean.gravity = "left";
+        textBean.type = "time";
+        textBean.width = 0.2f;
+        textBean.height = 0.2f;
+        //textBean.font = "/sdcard/3.ttf";
+        textBean.line = 1;
+        mStoryViewLayer.addData(textBean);
+
+        textBean = new TextBean();
+        textBean.left = 0.6f;
+        textBean.top = 0.6f;
+        textBean.hint = "杭州.黄龙时代广场.九言科技";
+        textBean.size = 12;
+        textBean.minSize = 8;
+        textBean.color = "#00FF00";
+        textBean.style = "";
+        textBean.spacing = 2;
+        textBean.gravity = "left";
+        textBean.type = "location";
+        textBean.width = 0.3f;
+        textBean.height = 0.1f;
+        //textBean.font = "/sdcard/3.ttf";
+        textBean.line = 1;
+        mStoryViewLayer.addData(textBean);
+
+        textBean = new TextBean();
+        textBean.left = 0.6f;
+        textBean.top = 0.8f;
+        textBean.hint = "杭州.黄龙时代广场";
+        textBean.size = 12;
+        textBean.minSize = 12;
+        textBean.color = "#00FF00";
+        textBean.style = "";
+        textBean.spacing = 2;
+        textBean.gravity = "right";
+        textBean.type = "location";
+        textBean.width = 0.3f;
+        textBean.height = 0.1f;
+        //textBean.font = "/sdcard/3.ttf";
         textBean.line = 1;
         mStoryViewLayer.addData(textBean);
     }

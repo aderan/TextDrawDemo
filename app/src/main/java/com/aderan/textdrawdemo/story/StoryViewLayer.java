@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 
 public class StoryViewLayer extends View {
+    SparseArray<StoryText> storyTextSparseArray = new SparseArray<>();
     List<StoryText> storyTexts = new ArrayList<>();
     private OnTextClickListener mOnTextClickListener;
 
@@ -55,14 +57,18 @@ public class StoryViewLayer extends View {
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                return true;
+                for (int i = 0; i < storyTexts.size(); i++) {
+                    if (storyTexts.get(i).isInText(eventX, eventY)) {
+                        return true;
+                    }
+                }
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
                 for (int i = 0; i < storyTexts.size(); i++) {
                     if (storyTexts.get(i).isInText(eventX, eventY)) {
                         if (mOnTextClickListener != null)
-                            mOnTextClickListener.onTextClick(storyTexts.get(i), storyTexts.get(i).getType());
+                            mOnTextClickListener.onTextClick(storyTexts.get(i));
                         return true;
                     }
                 }
@@ -76,6 +82,6 @@ public class StoryViewLayer extends View {
     }
 
     public interface OnTextClickListener {
-        void onTextClick(StoryText text, int type);
+        void onTextClick(StoryText text);
     }
 }
