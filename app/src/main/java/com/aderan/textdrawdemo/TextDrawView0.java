@@ -8,7 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.NinePatchDrawable;
 import android.text.Layout;
@@ -26,7 +28,8 @@ import java.io.InputStream;
  */
 
 public class TextDrawView0 extends View {
-    private NinePatchDrawable mNinePatchDrawable;
+    private static final String TEXT_STR = "故事集描述结构设置，不管不顾哈哈哈\n主动分行";
+    private TextPaint mTextPaint;
 
     public TextDrawView0(Context context) {
         super(context);
@@ -47,18 +50,8 @@ public class TextDrawView0 extends View {
     }
 
     private void init() {
-        //mDrawable = new GradientDrawable(GradientDrawable.Orientation.TL_BR,
-        //        new int[]{0xFFFF0000, 0xFF00FF00,
-        //                0xFF0000FF});
-
-        Bitmap bitmap = getImageFromAssetsFile("process_bg.png");
-        //mNinePatchDrawable = NinePatchBitmapFactory.createNinePathWithCapInsets(getResources(), bitmap, 9, 9, 52, 42, null);
-
-        byte[] ninePatchChunk = bitmap.getNinePatchChunk();
-        //if (NinePatch.isNinePatchChunk(ninePatchChunk)) {
-        //    Toast.makeText(getContext(), "是NinePatchChunk", Toast.LENGTH_SHORT).show();
-        //}
-        mNinePatchDrawable = new NinePatchDrawable(getResources(), bitmap, bitmap.getNinePatchChunk(), new Rect(), null);
+        mTextPaint = new TextPaint();
+        mTextPaint.setTextSize(80);
     }
 
     private Bitmap getImageFromAssetsFile(String fileName) {
@@ -78,14 +71,21 @@ public class TextDrawView0 extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        canvas.save();
+        canvas.translate(200, 200);
+        Path path = new Path();
+        path.addCircle(200, 200, 200, Path.Direction.CCW);
+        //canvas.clipRect(new RectF(0, 0, 400, 400));
+        canvas.clipPath(path);
 
-        mNinePatchDrawable.setBounds(new Rect(0, 0, 100, 100));
-        mNinePatchDrawable.draw(canvas);
+        mTextPaint.setColor(Color.parseColor("#3300FFFF"));
+        mTextPaint.setStyle(Paint.Style.FILL);
+        canvas.drawRect(new RectF(0, 0, 400, 400), mTextPaint);
 
-        mNinePatchDrawable.setBounds(new Rect(0, 100, 200, 300));
-        mNinePatchDrawable.draw(canvas);
+        mTextPaint.setColor(Color.BLACK);
 
-        mNinePatchDrawable.setBounds(new Rect(0, 300, 400, 700));
-        mNinePatchDrawable.draw(canvas);
+        StaticLayout staticlayout = new StaticLayout(TEXT_STR, mTextPaint, 400, Layout.Alignment.ALIGN_CENTER, 1.8f, 0, false);
+        staticlayout.draw(canvas);
+        canvas.restore();
     }
 }
